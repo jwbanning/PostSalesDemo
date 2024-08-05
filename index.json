@@ -1,0 +1,913 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Accounts",
+    "description": "Endpoints for frontend implementations when it comes to the account space.\n\nResponses can be visualized to give a clearer picture on what responses provide.\n\nMake sure to select the respective Environment file when making calls for the Collection\n\n<img src=\"https://i.imgur.com/ymcwlzB.gif\" alt=\"Imgur\">\n\nReference image example here:\n\n<img src=\"https://i.imgur.com/WbEHxDz.jpg\" alt=\"Imgur\">\n\nand example of Date\n\n<img src=\"https://i.imgur.com/zQq3VNF.jpg\" alt=\"Imgur\">",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "servers": [
+    {
+      "url": "{{accountsUrl}}"
+    }
+  ],
+  "paths": {
+    "/accounts/{accountNumber}/statement/latest": {
+      "get": {
+        "tags": [
+          "Statement"
+        ],
+        "summary": "Latest",
+        "description": "Latest",
+        "operationId": "latest",
+        "responses": {
+          "200": {
+            "description": "200 OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "object",
+                      "properties": {
+                        "closing": {
+                          "type": "number",
+                          "example": 563.2
+                        },
+                        "opening": {
+                          "type": "number",
+                          "example": 285.35
+                        }
+                      }
+                    },
+                    "money": {
+                      "type": "object",
+                      "properties": {
+                        "in": {
+                          "type": "number",
+                          "example": 125.49
+                        },
+                        "out": {
+                          "type": "number",
+                          "example": 146.07
+                        }
+                      }
+                    },
+                    "period": {
+                      "type": "string",
+                      "example": "latest"
+                    },
+                    "transactions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "amount": {
+                            "type": "number",
+                            "example": 445.54
+                          },
+                          "balance": {
+                            "type": "number",
+                            "example": 189.05
+                          },
+                          "date": {
+                            "type": "string",
+                            "example": "Sun Aug 04 2024 22:31:48 GMT-0400 (Eastern Daylight Time)"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "Satterfield, Stiedemann and Funk"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "withdrawal"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "amount": 445.54,
+                          "balance": 189.05,
+                          "date": "Sun Aug 04 2024 22:31:48 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Satterfield, Stiedemann and Funk",
+                          "type": "withdrawal"
+                        },
+                        {
+                          "amount": 704.76,
+                          "balance": 239.57,
+                          "date": "Mon Aug 05 2024 03:57:58 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Pollich, Von and Strosin",
+                          "type": "deposit"
+                        },
+                        {
+                          "amount": 306.46,
+                          "balance": 68.02,
+                          "date": "Mon Aug 05 2024 15:53:48 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Ferry Inc",
+                          "type": "withdrawal"
+                        },
+                        {
+                          "amount": 880.86,
+                          "balance": 701.46,
+                          "date": "Mon Aug 05 2024 10:35:56 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Feest - Considine",
+                          "type": "payment"
+                        },
+                        {
+                          "amount": 293.76,
+                          "balance": 136.04,
+                          "date": "Mon Aug 05 2024 05:35:44 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Hansen - Goldner",
+                          "type": "deposit"
+                        },
+                        {
+                          "amount": 703.21,
+                          "balance": 781.31,
+                          "date": "Mon Aug 05 2024 13:38:39 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Wintheiser, Wuckert and Hilpert",
+                          "type": "payment"
+                        },
+                        {
+                          "amount": 174.36,
+                          "balance": 558.91,
+                          "date": "Mon Aug 05 2024 10:38:03 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Streich - Beer",
+                          "type": "withdrawal"
+                        },
+                        {
+                          "amount": 434.19,
+                          "balance": 90.58,
+                          "date": "Mon Aug 05 2024 14:10:41 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Stark - Feil",
+                          "type": "invoice"
+                        },
+                        {
+                          "amount": 986.95,
+                          "balance": 288.33,
+                          "date": "Mon Aug 05 2024 12:18:48 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Koepp Group",
+                          "type": "payment"
+                        },
+                        {
+                          "amount": 742.54,
+                          "balance": 321.07,
+                          "date": "Mon Aug 05 2024 06:54:04 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Gulgowski - Gulgowski",
+                          "type": "deposit"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "200 OK": {
+                    "value": {
+                      "balance": {
+                        "closing": 563.2,
+                        "opening": 285.35
+                      },
+                      "money": {
+                        "in": 125.49,
+                        "out": 146.07
+                      },
+                      "period": "latest",
+                      "transactions": [
+                        {
+                          "amount": 445.54,
+                          "balance": 189.05,
+                          "date": "Sun Aug 04 2024 22:31:48 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Satterfield, Stiedemann and Funk",
+                          "type": "withdrawal"
+                        },
+                        {
+                          "amount": 704.76,
+                          "balance": 239.57,
+                          "date": "Mon Aug 05 2024 03:57:58 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Pollich, Von and Strosin",
+                          "type": "deposit"
+                        },
+                        {
+                          "amount": 306.46,
+                          "balance": 68.02,
+                          "date": "Mon Aug 05 2024 15:53:48 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Ferry Inc",
+                          "type": "withdrawal"
+                        },
+                        {
+                          "amount": 880.86,
+                          "balance": 701.46,
+                          "date": "Mon Aug 05 2024 10:35:56 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Feest - Considine",
+                          "type": "payment"
+                        },
+                        {
+                          "amount": 293.76,
+                          "balance": 136.04,
+                          "date": "Mon Aug 05 2024 05:35:44 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Hansen - Goldner",
+                          "type": "deposit"
+                        },
+                        {
+                          "amount": 703.21,
+                          "balance": 781.31,
+                          "date": "Mon Aug 05 2024 13:38:39 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Wintheiser, Wuckert and Hilpert",
+                          "type": "payment"
+                        },
+                        {
+                          "amount": 174.36,
+                          "balance": 558.91,
+                          "date": "Mon Aug 05 2024 10:38:03 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Streich - Beer",
+                          "type": "withdrawal"
+                        },
+                        {
+                          "amount": 434.19,
+                          "balance": 90.58,
+                          "date": "Mon Aug 05 2024 14:10:41 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Stark - Feil",
+                          "type": "invoice"
+                        },
+                        {
+                          "amount": 986.95,
+                          "balance": 288.33,
+                          "date": "Mon Aug 05 2024 12:18:48 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Koepp Group",
+                          "type": "payment"
+                        },
+                        {
+                          "amount": 742.54,
+                          "balance": 321.07,
+                          "date": "Mon Aug 05 2024 06:54:04 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Gulgowski - Gulgowski",
+                          "type": "deposit"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "accountNumber",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "31518721"
+          },
+          "description": "(Required) "
+        }
+      ]
+    },
+    "/accounts/{accountNumber}/statement/date": {
+      "get": {
+        "tags": [
+          "Statement"
+        ],
+        "summary": "Date",
+        "description": "Use the statement/date endpoint to retrieve the dates of the transactions",
+        "operationId": "date",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "example": "Fri May 17 2024 11:33:21 GMT-0400 (Eastern Daylight Time)"
+                  },
+                  "to": {
+                    "type": "string",
+                    "example": "Mon Aug 05 2024 05:37:55 GMT-0400 (Eastern Daylight Time)"
+                  }
+                }
+              },
+              "examples": {
+                "Date": {
+                  "value": {
+                    "from": "Fri May 17 2024 11:33:21 GMT-0400 (Eastern Daylight Time)",
+                    "to": "Mon Aug 05 2024 05:37:55 GMT-0400 (Eastern Daylight Time)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200 OK",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "close"
+                }
+              },
+              "Content-Encoding": {
+                "schema": {
+                  "type": "string",
+                  "example": "gzip"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Mon, 14 Jun 2021 14:30:25 GMT"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"96-S/5iQ2y1qqIInh5BwoPc+chvDJU\""
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "nginx"
+                }
+              },
+              "Transfer-Encoding": {
+                "schema": {
+                  "type": "string",
+                  "example": "chunked"
+                }
+              },
+              "Vary": {
+                "schema": {
+                  "type": "string",
+                  "example": "Accept-Encoding"
+                }
+              },
+              "X-RateLimit-Limit": {
+                "schema": {
+                  "type": "string",
+                  "example": "120"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "schema": {
+                  "type": "string",
+                  "example": "119"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "schema": {
+                  "type": "string",
+                  "example": "1623681083"
+                }
+              },
+              "x-srv-span": {
+                "schema": {
+                  "type": "string",
+                  "example": "v=1;s=210e5b055e5bd71e"
+                }
+              },
+              "x-srv-trace": {
+                "schema": {
+                  "type": "string",
+                  "example": "v=1;t=d33d68b932344fce"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "object",
+                      "properties": {
+                        "closing": {
+                          "type": "number",
+                          "example": 108.9
+                        },
+                        "opening": {
+                          "type": "number",
+                          "example": 29.87
+                        }
+                      }
+                    },
+                    "money": {
+                      "type": "object",
+                      "properties": {
+                        "in": {
+                          "type": "number",
+                          "example": 21.8
+                        },
+                        "out": {
+                          "type": "number",
+                          "example": 347.27
+                        }
+                      }
+                    },
+                    "period": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string",
+                          "example": "Fri Apr 05 2024 11:29:29 GMT-0400 (Eastern Daylight Time)"
+                        },
+                        "to": {
+                          "type": "string",
+                          "example": "Mon Aug 05 2024 07:41:17 GMT-0400 (Eastern Daylight Time)"
+                        }
+                      }
+                    },
+                    "transactions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "amount": {
+                            "type": "number",
+                            "example": 36.13
+                          },
+                          "balance": {
+                            "type": "number",
+                            "example": 511.9
+                          },
+                          "date": {
+                            "type": "string",
+                            "example": "Mon Aug 05 2024 14:43:25 GMT-0400 (Eastern Daylight Time)"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "Harvey LLC"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "invoice"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "amount": 36.13,
+                          "balance": 511.9,
+                          "date": "Mon Aug 05 2024 14:43:25 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Harvey LLC",
+                          "type": "invoice"
+                        },
+                        {
+                          "amount": 243.84,
+                          "balance": 533.2,
+                          "date": "Sun Aug 04 2024 18:15:58 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Dietrich Inc",
+                          "type": "invoice"
+                        },
+                        {
+                          "amount": 85.84,
+                          "balance": 602.13,
+                          "date": "Sun Aug 04 2024 22:44:22 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Hand, Bartoletti and Prosacco",
+                          "type": "payment"
+                        },
+                        {
+                          "amount": 142.37,
+                          "balance": 939.08,
+                          "date": "Mon Aug 05 2024 15:59:17 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Kris and Sons",
+                          "type": "payment"
+                        },
+                        {
+                          "amount": 906.7,
+                          "balance": 572.36,
+                          "date": "Mon Aug 05 2024 12:02:14 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Mueller Group",
+                          "type": "withdrawal"
+                        },
+                        {
+                          "amount": 134.28,
+                          "balance": 254.78,
+                          "date": "Mon Aug 05 2024 11:28:18 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Pfannerstill, Auer and Douglas",
+                          "type": "deposit"
+                        },
+                        {
+                          "amount": 185.76,
+                          "balance": 774.76,
+                          "date": "Sun Aug 04 2024 20:38:09 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Weber Inc",
+                          "type": "invoice"
+                        },
+                        {
+                          "amount": 190.07,
+                          "balance": 928.8,
+                          "date": "Mon Aug 05 2024 00:30:59 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Dare, Connelly and Gutmann",
+                          "type": "invoice"
+                        },
+                        {
+                          "amount": 665.27,
+                          "balance": 874.38,
+                          "date": "Mon Aug 05 2024 12:24:37 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Connelly and Sons",
+                          "type": "withdrawal"
+                        },
+                        {
+                          "amount": 787.86,
+                          "balance": 104.53,
+                          "date": "Mon Aug 05 2024 09:03:30 GMT-0400 (Eastern Daylight Time)",
+                          "description": "O'Conner, Little and Cummings",
+                          "type": "invoice"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "200 OK": {
+                    "value": {
+                      "balance": {
+                        "closing": 108.9,
+                        "opening": 29.87
+                      },
+                      "money": {
+                        "in": 21.8,
+                        "out": 347.27
+                      },
+                      "period": {
+                        "from": "Fri Apr 05 2024 11:29:29 GMT-0400 (Eastern Daylight Time)",
+                        "to": "Mon Aug 05 2024 07:41:17 GMT-0400 (Eastern Daylight Time)"
+                      },
+                      "transactions": [
+                        {
+                          "amount": 36.13,
+                          "balance": 511.9,
+                          "date": "Mon Aug 05 2024 14:43:25 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Harvey LLC",
+                          "type": "invoice"
+                        },
+                        {
+                          "amount": 243.84,
+                          "balance": 533.2,
+                          "date": "Sun Aug 04 2024 18:15:58 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Dietrich Inc",
+                          "type": "invoice"
+                        },
+                        {
+                          "amount": 85.84,
+                          "balance": 602.13,
+                          "date": "Sun Aug 04 2024 22:44:22 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Hand, Bartoletti and Prosacco",
+                          "type": "payment"
+                        },
+                        {
+                          "amount": 142.37,
+                          "balance": 939.08,
+                          "date": "Mon Aug 05 2024 15:59:17 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Kris and Sons",
+                          "type": "payment"
+                        },
+                        {
+                          "amount": 906.7,
+                          "balance": 572.36,
+                          "date": "Mon Aug 05 2024 12:02:14 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Mueller Group",
+                          "type": "withdrawal"
+                        },
+                        {
+                          "amount": 134.28,
+                          "balance": 254.78,
+                          "date": "Mon Aug 05 2024 11:28:18 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Pfannerstill, Auer and Douglas",
+                          "type": "deposit"
+                        },
+                        {
+                          "amount": 185.76,
+                          "balance": 774.76,
+                          "date": "Sun Aug 04 2024 20:38:09 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Weber Inc",
+                          "type": "invoice"
+                        },
+                        {
+                          "amount": 190.07,
+                          "balance": 928.8,
+                          "date": "Mon Aug 05 2024 00:30:59 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Dare, Connelly and Gutmann",
+                          "type": "invoice"
+                        },
+                        {
+                          "amount": 665.27,
+                          "balance": 874.38,
+                          "date": "Mon Aug 05 2024 12:24:37 GMT-0400 (Eastern Daylight Time)",
+                          "description": "Connelly and Sons",
+                          "type": "withdrawal"
+                        },
+                        {
+                          "amount": 787.86,
+                          "balance": 104.53,
+                          "date": "Mon Aug 05 2024 09:03:30 GMT-0400 (Eastern Daylight Time)",
+                          "description": "O'Conner, Little and Cummings",
+                          "type": "invoice"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "accountNumber",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/accounts/{accountNumber}/overview": {
+      "get": {
+        "summary": "Overview",
+        "description": "Overview",
+        "operationId": "overview",
+        "responses": {
+          "200": {
+            "description": "200 OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "object",
+                      "properties": {
+                        "available": {
+                          "type": "number",
+                          "example": 812.77
+                        },
+                        "present": {
+                          "type": "number",
+                          "example": 567.16
+                        }
+                      }
+                    },
+                    "details": {
+                      "type": "object",
+                      "properties": {
+                        "domestic": {
+                          "type": "object",
+                          "properties": {
+                            "account": {
+                              "type": "string",
+                              "example": "51355110"
+                            },
+                            "routing": {
+                              "type": "string",
+                              "example": "80004300"
+                            }
+                          }
+                        },
+                        "international": {
+                          "type": "object",
+                          "properties": {
+                            "bic": {
+                              "type": "string",
+                              "example": "EKPUHNG1"
+                            },
+                            "iban": {
+                              "type": "string",
+                              "example": "NO3500830272268"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "interestRate": {
+                      "type": "number",
+                      "example": 0.01
+                    },
+                    "lastStatementDate": {
+                      "type": "string",
+                      "example": "Mon Aug 05 2024 01:55:27 GMT-0400 (Eastern Daylight Time)"
+                    },
+                    "type": {
+                      "type": "string",
+                      "example": "Home Loan Account"
+                    }
+                  }
+                },
+                "examples": {
+                  "200 OK": {
+                    "value": {
+                      "balance": {
+                        "available": 812.77,
+                        "present": 567.16
+                      },
+                      "details": {
+                        "domestic": {
+                          "account": "51355110",
+                          "routing": "80004300"
+                        },
+                        "international": {
+                          "bic": "EKPUHNG1",
+                          "iban": "NO3500830272268"
+                        }
+                      },
+                      "interestRate": 0.01,
+                      "lastStatementDate": "Mon Aug 05 2024 01:55:27 GMT-0400 (Eastern Daylight Time)",
+                      "type": "Home Loan Account"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "accountNumber",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/accounts/create": {
+      "post": {
+        "summary": "Create",
+        "description": "\n### Create Account\n\nThis endpoint allows you to create a new account.\n\n#### Request Body\n- `type` (string, required): The type of the account.\n- `holder` (string, required): The account holder's name.\n\n#### Response\nThe response is a JSON object with the following properties:\n- `type` (string): The type of the account.\n- `details` (object): Additional details about the account, including domestic and international information.\n  - `domestic` (object): Domestic account details.\n    - `account` (string): The domestic account number.\n    - `routing` (string): The domestic routing number.\n  - `international` (object): International account details.\n    - `bic` (string): The Bank Identifier Code (BIC) for international transactions.\n    - `iban` (string): The International Bank Account Number (IBAN) for international transactions.\n\n#### JSON Schema\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"type\": { \"type\": \"string\" },\n    \"details\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"domestic\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"account\": { \"type\": \"string\" },\n            \"routing\": { \"type\": \"string\" }\n          }\n        },\n        \"international\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"bic\": { \"type\": \"string\" },\n            \"iban\": { \"type\": \"string\" }\n          }\n        }\n      }\n    }\n  }\n}\n```\n",
+        "operationId": "create",
+        "parameters": [
+          {
+            "name": "x-mock-response-name",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "example": "400 Bad Request"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "holder": {
+                    "type": "string",
+                    "example": "{{customerId}}"
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "Money Market Account"
+                  }
+                }
+              },
+              "examples": {
+                "Create": {
+                  "value": {
+                    "holder": "{{customerId}}",
+                    "type": "Money Market Account"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200 OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "details": {
+                      "type": "object",
+                      "properties": {
+                        "domestic": {
+                          "type": "object",
+                          "properties": {
+                            "account": {
+                              "type": "string",
+                              "example": "49246343"
+                            },
+                            "routing": {
+                              "type": "string",
+                              "example": "28706121"
+                            }
+                          }
+                        },
+                        "international": {
+                          "type": "object",
+                          "properties": {
+                            "bic": {
+                              "type": "string",
+                              "example": "VTYOBVQ1"
+                            },
+                            "iban": {
+                              "type": "string",
+                              "example": "FO7628306003002051"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": {
+                      "type": "string",
+                      "example": "Auto Loan Account"
+                    }
+                  }
+                },
+                "examples": {
+                  "200 OK": {
+                    "value": {
+                      "details": {
+                        "domestic": {
+                          "account": "49246343",
+                          "routing": "28706121"
+                        },
+                        "international": {
+                          "bic": "VTYOBVQ1",
+                          "iban": "FO7628306003002051"
+                        }
+                      },
+                      "type": "Auto Loan Account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "The account holder ID does not exist"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "holderNotFoundError"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "400 Bad Request": {
+                    "value": {
+                      "error": {
+                        "message": "The account holder ID does not exist",
+                        "name": "holderNotFoundError"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Statement"
+    }
+  ]
+}
