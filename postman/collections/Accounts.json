@@ -1,0 +1,603 @@
+{
+	"info": {
+		"_postman_id": "e50e6178-4ce9-4424-9781-36982ab95796",
+		"name": "Accounts",
+		"description": "Endpoints for frontend implementations when it comes to the account space.\n\nResponses can be visualized to give a clearer picture on what responses provide.\n\nMake sure to select the respective Environment file when making calls for the Collection\n\n<img src=\"https://i.imgur.com/ymcwlzB.gif\" alt=\"Imgur\">\n\nReference image example here:\n\n<img src=\"https://i.imgur.com/WbEHxDz.jpg\" alt=\"Imgur\">\n\nand example of Date\n\n<img src=\"https://i.imgur.com/zQq3VNF.jpg\" alt=\"Imgur\">",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "15446980-e50e6178-4ce9-4424-9781-36982ab95796"
+	},
+	"item": [
+		{
+			"name": "Statement",
+			"item": [
+				{
+					"name": "Latest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fff079fd-6f45-44c8-8b85-8cf373225957",
+								"exec": [
+									"const statusCode = pm.require('@finance-demo/status-code');",
+									"",
+									"statusCode.statusAndResponse(pm.response, 200, 1000)",
+									"",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData).to.include.all.keys('period', 'balance', 'money', 'transactions');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Opening and closing balances are non-negative numbers\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.balance).to.exist.and.to.be.an('object');",
+									"    pm.expect(responseData.balance.opening).to.be.at.least(0);",
+									"    pm.expect(responseData.balance.closing).to.be.at.least(0);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Money 'in' and 'out' values are non-negative numbers\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.money).to.be.an('object');",
+									"  pm.expect(responseData.money.in).to.be.at.least(0);",
+									"  pm.expect(responseData.money.out).to.be.at.least(0);",
+									"});",
+									"",
+									"pm.test('Transactions type should only be \"invoice\", \"withdrawal\", \"deposit\", or \"payment\"', function () {",
+									"     var responseJSON = pm.response.json();",
+									"     pm.expect(responseJSON).to.be.an('object');",
+									"     responseJSON.transactions.forEach((transaction) => {",
+									"            pm.expect(transaction.type).to.be.oneOf(['invoice', 'withdrawal', 'deposit', 'payment']);",
+									"     });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {
+									"@finance-demo/status-code": {
+										"id": "0190a80c-05e3-7aaf-b732-87c6c06ffa63"
+									}
+								}
+							}
+						}
+					],
+					"id": "990a4207-1117-4e91-8062-de3ceb0c64f2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{accountsUrl}}/accounts/{{accountNumber}}/statement/latest",
+							"host": [
+								"{{accountsUrl}}"
+							],
+							"path": [
+								"accounts",
+								"{{accountNumber}}",
+								"statement",
+								"latest"
+							],
+							"variable": [
+								{
+									"key": "accountNumber",
+									"value": "31518721",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "202a1a91-3647-403f-a968-2d0150fa6807",
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{accountsUrl}}/accounts/{{accountNumber}}/statement/latest",
+									"host": [
+										"{{accountsUrl}}"
+									],
+									"path": [
+										"accounts",
+										"{{accountNumber}}",
+										"statement",
+										"latest"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text",
+									"uuid": "c78108b5-b7c7-4a52-b193-a3ae3b866c30"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"period\": \"latest\",\n    \"balance\": {\n        \"opening\": 285.35,\n        \"closing\": 563.20\n    },\n    \"money\": {\n        \"in\": 125.49,\n        \"out\": 146.07\n    },\n    \"transactions\": [\n        {\n            \"date\": \"Sun Aug 04 2024 22:31:48 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Satterfield, Stiedemann and Funk\",\n            \"type\": \"withdrawal\",\n            \"amount\": 445.54,\n            \"balance\": 189.05\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 03:57:58 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Pollich, Von and Strosin\",\n            \"type\": \"deposit\",\n            \"amount\": 704.76,\n            \"balance\": 239.57\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 15:53:48 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Ferry Inc\",\n            \"type\": \"withdrawal\",\n            \"amount\": 306.46,\n            \"balance\": 68.02\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 10:35:56 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Feest - Considine\",\n            \"type\": \"payment\",\n            \"amount\": 880.86,\n            \"balance\": 701.46\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 05:35:44 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Hansen - Goldner\",\n            \"type\": \"deposit\",\n            \"amount\": 293.76,\n            \"balance\": 136.04\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 13:38:39 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Wintheiser, Wuckert and Hilpert\",\n            \"type\": \"payment\",\n            \"amount\": 703.21,\n            \"balance\": 781.31\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 10:38:03 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Streich - Beer\",\n            \"type\": \"withdrawal\",\n            \"amount\": 174.36,\n            \"balance\": 558.91\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 14:10:41 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Stark - Feil\",\n            \"type\": \"invoice\",\n            \"amount\": 434.19,\n            \"balance\": 90.58\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 12:18:48 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Koepp Group\",\n            \"type\": \"payment\",\n            \"amount\": 986.95,\n            \"balance\": 288.33\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 06:54:04 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Gulgowski - Gulgowski\",\n            \"type\": \"deposit\",\n            \"amount\": 742.54,\n            \"balance\": 321.07\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Period object has 'from' and 'to' fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.period).to.exist.and.to.be.an('object');",
+									"    pm.expect(responseData.period).to.have.property('from');",
+									"    pm.expect(responseData.period).to.have.property('to');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Balance object has 'opening' and 'closing' fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.balance).to.exist;",
+									"    pm.expect(responseData.balance).to.have.property('opening');",
+									"    pm.expect(responseData.balance).to.have.property('closing');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Transactions array contains objects with required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.transactions).to.be.an('array');",
+									"    responseData.transactions.forEach(function(transaction) {",
+									"        pm.expect(transaction).to.have.property('date').that.is.a('string');",
+									"        pm.expect(transaction).to.have.property('description').that.is.a('string');",
+									"        pm.expect(transaction).to.have.property('type').that.is.a('string');",
+									"        pm.expect(transaction).to.have.property('amount').that.is.a('number');",
+									"        pm.expect(transaction).to.have.property('balance').that.is.a('number');",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"id": "f9710ccb-7bc8-4701-b79d-ec0587e88b1c"
+							}
+						}
+					],
+					"id": "e6ac8d57-fe80-4526-8391-fded9e9329c0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "from",
+									"value": "Fri May 17 2024 11:33:21 GMT-0400 (Eastern Daylight Time)",
+									"type": "text"
+								},
+								{
+									"key": "to",
+									"value": "Mon Aug 05 2024 05:37:55 GMT-0400 (Eastern Daylight Time)",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{accountsUrl}}/accounts/{{accountNumber}}/statement/date",
+							"host": [
+								"{{accountsUrl}}"
+							],
+							"path": [
+								"accounts",
+								"{{accountNumber}}",
+								"statement",
+								"date"
+							]
+						},
+						"description": "Use the statement/date endpoint to retrieve the dates of the transactions"
+					},
+					"response": [
+						{
+							"id": "7b5163dd-40d2-430f-a8a1-0ee3aebc02a5",
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{accountsUrl}}/accounts/{{accountNumber}}/statement/date",
+									"host": [
+										"{{accountsUrl}}"
+									],
+									"path": [
+										"accounts",
+										"{{accountNumber}}",
+										"statement",
+										"date"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 14 Jun 2021 14:30:25 GMT",
+									"uuid": "3aec4270-aa01-4b63-8414-fcc409c3318f"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"uuid": "dba0919b-c06d-45a9-b9df-53d2ea55bd4a"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked",
+									"uuid": "4c0183e5-ef58-4906-b44c-0c9acd467274"
+								},
+								{
+									"key": "Connection",
+									"value": "close",
+									"uuid": "abd53b32-73c2-4b71-8292-4870c78b9ffc"
+								},
+								{
+									"key": "Server",
+									"value": "nginx",
+									"uuid": "16267dae-687c-46f9-89d6-215aa6dc9b0d"
+								},
+								{
+									"key": "x-srv-trace",
+									"value": "v=1;t=d33d68b932344fce",
+									"uuid": "e39e79b8-d598-4904-9d26-f3c75c92cb01"
+								},
+								{
+									"key": "x-srv-span",
+									"value": "v=1;s=210e5b055e5bd71e",
+									"uuid": "003d3715-4d68-49f5-9799-940d66d04756"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"uuid": "8adcd564-4cfb-4f01-8024-695a3f7fe213"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "120",
+									"uuid": "d76c14d3-a77a-4f1c-aea5-59905d392e30"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "119",
+									"uuid": "b5e724dd-b0f5-4e0e-97c9-6bf0c06fca62"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1623681083",
+									"uuid": "c3d2f9d2-b70f-4e38-87a2-52d884def135"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"96-S/5iQ2y1qqIInh5BwoPc+chvDJU\"",
+									"uuid": "c3828f96-a8c1-4577-a457-42270522775d"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding",
+									"uuid": "f3c5a379-25b5-443a-948a-16e3b2cc85b4"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip",
+									"uuid": "23a8db8d-b569-4c7e-8e36-d37899f11ee2"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"period\": {\n        \"from\": \"Fri Apr 05 2024 11:29:29 GMT-0400 (Eastern Daylight Time)\",\n        \"to\": \"Mon Aug 05 2024 07:41:17 GMT-0400 (Eastern Daylight Time)\"\n    },\n    \"balance\": {\n        \"opening\": 29.87,\n        \"closing\": 108.90\n    },\n    \"money\": {\n        \"in\": 21.80,\n        \"out\": 347.27\n    },\n    \"transactions\": [\n        {\n            \"date\": \"Mon Aug 05 2024 14:43:25 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Harvey LLC\",\n            \"type\": \"invoice\",\n            \"amount\": 36.13,\n            \"balance\": 511.90\n        },\n        {\n            \"date\": \"Sun Aug 04 2024 18:15:58 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Dietrich Inc\",\n            \"type\": \"invoice\",\n            \"amount\": 243.84,\n            \"balance\": 533.20\n        },\n        {\n            \"date\": \"Sun Aug 04 2024 22:44:22 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Hand, Bartoletti and Prosacco\",\n            \"type\": \"payment\",\n            \"amount\": 85.84,\n            \"balance\": 602.13\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 15:59:17 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Kris and Sons\",\n            \"type\": \"payment\",\n            \"amount\": 142.37,\n            \"balance\": 939.08\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 12:02:14 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Mueller Group\",\n            \"type\": \"withdrawal\",\n            \"amount\": 906.70,\n            \"balance\": 572.36\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 11:28:18 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Pfannerstill, Auer and Douglas\",\n            \"type\": \"deposit\",\n            \"amount\": 134.28,\n            \"balance\": 254.78\n        },\n        {\n            \"date\": \"Sun Aug 04 2024 20:38:09 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Weber Inc\",\n            \"type\": \"invoice\",\n            \"amount\": 185.76,\n            \"balance\": 774.76\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 00:30:59 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Dare, Connelly and Gutmann\",\n            \"type\": \"invoice\",\n            \"amount\": 190.07,\n            \"balance\": 928.80\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 12:24:37 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"Connelly and Sons\",\n            \"type\": \"withdrawal\",\n            \"amount\": 665.27,\n            \"balance\": 874.38\n        },\n        {\n            \"date\": \"Mon Aug 05 2024 09:03:30 GMT-0400 (Eastern Daylight Time)\",\n            \"description\": \"O'Conner, Little and Cummings\",\n            \"type\": \"invoice\",\n            \"amount\": 787.86,\n            \"balance\": 104.53\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"id": "77f316d9-234e-4a21-b2a2-b802cc1d6cc5"
+		},
+		{
+			"name": "Overview",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Type field is present and not empty\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.type).to.exist.and.to.not.be.empty;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Balance object contains non-negative available and present fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.balance).to.be.an('object');",
+							"    pm.expect(responseData.balance.available).to.be.a('number').and.to.be.at.least(0);",
+							"    pm.expect(responseData.balance.present).to.be.a('number').and.to.be.at.least(0);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Details object contains domestic and international sub-objects with required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.details).to.be.an('object');",
+							"    pm.expect(responseData.details.domestic).to.be.an('object').that.has.all.keys('account', 'routing');",
+							"    pm.expect(responseData.details.international).to.be.an('object').that.has.all.keys('bic', 'iban');",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "04235674-c0f6-4749-9e0f-0529f2b2b703"
+					}
+				}
+			],
+			"id": "729e19f0-3aa6-49cc-84c3-79e379ebf5a8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{accountsUrl}}/accounts/{{accountNumber}}/overview",
+					"host": [
+						"{{accountsUrl}}"
+					],
+					"path": [
+						"accounts",
+						"{{accountNumber}}",
+						"overview"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "0468d162-409b-4f37-a82b-a2a30bc81b79",
+					"name": "200 OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{accountsUrl}}/accounts/{{accountNumber}}/overview",
+							"host": [
+								"{{accountsUrl}}"
+							],
+							"path": [
+								"accounts",
+								"{{accountNumber}}",
+								"overview"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text",
+							"uuid": "a88e8a28-2302-4568-9e93-ba7971a666cc"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"type\": \"Home Loan Account\",\n    \"balance\": {\n        \"available\": 812.77,\n        \"present\": 567.16\n    },\n    \"details\": {\n        \"domestic\": {\n            \"account\": \"51355110\",\n            \"routing\": \"80004300\"\n        },\n        \"international\": {\n            \"bic\": \"EKPUHNG1\",\n            \"iban\": \"NO3500830272268\"\n        }\n    },\n    \"interestRate\": 0.01,\n    \"lastStatementDate\": \"Mon Aug 05 2024 01:55:27 GMT-0400 (Eastern Daylight Time)\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create",
+			"id": "0ff5b64f-5722-485b-98ca-d02656263962",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-mock-response-name",
+						"value": "400 Bad Request",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"Personal Loan Account\",\n    \"holder\": \"{{customerId}}\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{accountsUrl}}/accounts/create",
+					"host": [
+						"{{accountsUrl}}"
+					],
+					"path": [
+						"accounts",
+						"create"
+					]
+				},
+				"description": "\n### Create Account\n\nThis endpoint allows you to create a new account.\n\n#### Request Body\n- `type` (string, required): The type of the account.\n- `holder` (string, required): The account holder's name.\n\n#### Response\nThe response is a JSON object with the following properties:\n- `type` (string): The type of the account.\n- `details` (object): Additional details about the account, including domestic and international information.\n  - `domestic` (object): Domestic account details.\n    - `account` (string): The domestic account number.\n    - `routing` (string): The domestic routing number.\n  - `international` (object): International account details.\n    - `bic` (string): The Bank Identifier Code (BIC) for international transactions.\n    - `iban` (string): The International Bank Account Number (IBAN) for international transactions.\n\n#### JSON Schema\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"type\": { \"type\": \"string\" },\n    \"details\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"domestic\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"account\": { \"type\": \"string\" },\n            \"routing\": { \"type\": \"string\" }\n          }\n        },\n        \"international\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"bic\": { \"type\": \"string\" },\n            \"iban\": { \"type\": \"string\" }\n          }\n        }\n      }\n    }\n  }\n}\n```\n"
+			},
+			"response": [
+				{
+					"id": "8188eef0-fa06-4989-81fd-697ebfbe8978",
+					"name": "200 OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"Credit Card Account\",\n    \"holder\": \"{{customerId}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{accountsUrl}}/accounts/create",
+							"host": [
+								"{{accountsUrl}}"
+							],
+							"path": [
+								"accounts",
+								"create"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"uuid": "e6e989f5-e5fa-4fbd-84cc-0fed95198a71"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"type\": \"Auto Loan Account\",\n    \"details\": {\n        \"domestic\": {\n            \"account\": \"49246343\",\n            \"routing\": \"28706121\"\n        },\n        \"international\": {\n            \"bic\": \"VTYOBVQ1\",\n            \"iban\": \"FO7628306003002051\"\n        }\n    }\n}"
+				},
+				{
+					"id": "45f1fe73-a25b-45e7-9c83-ba8b23f66f4d",
+					"name": "400 Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"Money Market Account\",\n    \"holder\": \"{{customerId}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{accountsUrl}}/accounts/create",
+							"host": [
+								"{{accountsUrl}}"
+							],
+							"path": [
+								"accounts",
+								"create"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"uuid": "e627fc66-b22a-4585-ad57-9d21ba516c26"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": {\n        \"name\": \"holderNotFoundError\",\n        \"message\": \"The account holder ID does not exist\"\n    }\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "x-api-key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ded29ca0-ad5e-4b30-bbf4-6dbcfebd07a7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c110f835-823e-42af-a76a-c032b319fcc5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "eceea703-85d7-4a3f-8004-9f41ee30032a",
+			"key": "api_key",
+			"value": "dummy_val",
+			"type": "string"
+		}
+	]
+}
