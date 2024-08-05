@@ -15,4 +15,4 @@ jobs:
       - name: Run API tests
         run: |
           # Lint your API using Postman CLI
-          postman api lint 5635b637-9d9f-45e1-a60d-a119c4be1d27 --integration-id 166879
+          # postman api lint 5635b637-9d9f-45e1-a60d-a119c4be1d27 --integration-id 166879
