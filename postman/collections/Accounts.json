@@ -20,6 +20,9 @@
 								"exec": [
 									"const statusCode = pm.require('@finance-demo/status-code');",
 									"",
+									"",
+									"",
+									"",
 									"statusCode.statusAndResponse(pm.response, 200, 1000)",
 									"",
 									"pm.test(\"Content-Type header is application/json\", function () {",
