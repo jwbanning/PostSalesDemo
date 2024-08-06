@@ -337,6 +337,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "04235674-c0f6-4749-9e0f-0529f2b2b703",
 						"exec": [
 							"",
 							"pm.test(\"Response status code is 200\", function () {",
@@ -373,10 +374,13 @@
 							"    pm.expect(responseData.details).to.be.an('object');",
 							"    pm.expect(responseData.details.domestic).to.be.an('object').that.has.all.keys('account', 'routing');",
 							"    pm.expect(responseData.details.international).to.be.an('object').that.has.all.keys('bic', 'iban');",
+							"});",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
 							"});"
 						],
 						"type": "text/javascript",
-						"id": "04235674-c0f6-4749-9e0f-0529f2b2b703"
+						"packages": {}
 					}
 				}
 			],
